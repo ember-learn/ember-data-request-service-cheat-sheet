@@ -1,7 +1,7 @@
 layout:
   application:
     logo-alt-text: 'Ember Octane: a mais recente edição do Ember.js'
-    title: Ember.js Octane vs Classic Cheat Sheet
+    title: EmberData Request Service Cheat Sheet
     description-1: >
       Esse guia é uma cola para usar o '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">'Ember.js Octane'</a>'.
       Ele não cobre tudo, mas é o suficiente para você começar!
