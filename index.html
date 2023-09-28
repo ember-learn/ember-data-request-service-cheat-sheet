@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="en"  lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="See side-by-side examples of EmberData's Request Service and older patterns.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+<meta name="ember-data-request-service-cheat-sheet/config/environment" content="%7B%22modulePrefix%22%3A%22ember-data-request-service-cheat-sheet%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2Fember-data-request-service-cheat-sheet%2F%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22ember-data-request-service-cheat-sheet%22%2C%22version%22%3A%220.0.1%2B8162c958%22%7D%2C%22ember-shiki%22%3A%7B%22defaultThemes%22%3A%5B%22dark-plus%22%5D%7D%2C%22exportApplicationGlobal%22%3Afalse%7D" />
+<!-- EMBER_CLI_FASTBOOT_TITLE --><title>EmberData Request Service Cheat Sheet</title>
+
+    <link integrity="" rel="stylesheet" href="/ember-data-request-service-cheat-sheet/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
+<link rel="stylesheet" href="/ember-data-request-service-cheat-sheet/assets/chunk.143.f518b8978e626cee994b.css"/>
+    <link integrity="" rel="stylesheet" href="/ember-data-request-service-cheat-sheet/assets/ember-data-request-service-cheat-sheet-c3059566c5059820eab78052a964598d.css">
+
+    
+  </head>
+  <body>
+    <script type="x/boundary" id="fastboot-body-start"></script>
+
+<header class="_header_1h71my">
+  <img class="_logo_1h71my" alt="Ember Octane: the latest edition from Ember.js" src="/ember-data-request-service-cheat-sheet/assets/ember-data-4c-on-light-bg-c1585e70b5c1204d10397724ac06ed74.png">
+
+  <div class="_locale-menu-container_1h71my">
+      <div id="ember4" class="ember-view container-query _container_nm2iph">
+    
+  <label for="locale-menu">
+    Translate the guide to
+  </label>
+
+  <select class="_select_nm2iph" id="locale-menu">
+    <option value disabled selected>
+     Select your preferred language
+    </option>
+
+      <option value="de-DE">
+        Deutsch (DE)
+      </option>
+      <option value="en-US">
+        English (US)
+      </option>
+      <option value="fr-FR">
+        Français
+      </option>
+      <option value="pt-BR">
+        Português (do Brasil)
+      </option>
+      <option value="es">
+        Spanish
+      </option>
+      <option value="ja">
+        日本語
+      </option>
+   </select>
+
+  </div>
+
+  </div>
+</header>
+
+<main class="_main_1h71my">
+  <h1 class>
+    EmberData Request Service Cheat Sheet
+  </h1>
+
+  <p>
+    This guide is a cheat sheet for using <a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">EmberData&#39;s Request Service</a>. It doesn't cover everything, but it should get you started! PRs welcome at <a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">the GitHub repository</a>.
+
+  </p>
+
+  <p>
+    For in-depth information about the upgrade paths and differences compared to older EmberData patterns, see <a href="https://rfcs.emberjs.com/id/0860-ember-data-request-service/" target="_blank" rel="noopener noreferrer">the RFC for the EmberData Request Service</a>.
+
+  </p>
+
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="generating-files">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="generating-files">
+        Generating Files
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#generating-files" title="Generating Files">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="generating-files__generating-component">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="generating-files__generating-component">
+        Use an option to generate a component's JavaScript
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#generating-files__generating-component" title="Use an option to generate a component's JavaScript">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In classic Ember, <code>ember generate component</code> created three files: the template, a JavaScript file, and a test. In Octane, <code>ember generate component</code> skips creating the JavaScript file. If you want the backing JavaScript class as well, include the <code>-gc</code> option.
+
+    </p>
+
+      <div id="ember5" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">ember</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">generate</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">component</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">my-component</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955"># -gc stands for glimmer component</span></span>
+<span class="line"><span style="color: #DCDCAA">ember</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">generate</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">component</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">my-component</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-gc</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955"># -cc stands for classic component</span></span>
+<span class="line"><span style="color: #DCDCAA">ember</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">generate</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">component</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">my-component</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">-cc</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955"># See the full set of options with this:</span></span>
+<span class="line"><span style="color: #DCDCAA">ember</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">generate</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">component</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">--help</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/generating-files/generating-component/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="generating-files__file-structure">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="generating-files__file-structure">
+        Component templates and JavaScript are in the same directory
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#generating-files__file-structure" title="Component templates and JavaScript are in the same directory">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      The location of component templates has changed in Octane. This is known as "template co-location."
+
+    </p>
+
+      <div id="ember6" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #D4D4D4">app/</span></span>
+<span class="line"><span style="color: #D4D4D4">  components/</span></span>
+<span class="line"><span style="color: #D4D4D4">    my-component.js</span></span>
+<span class="line"><span style="color: #D4D4D4">  templates/</span></span>
+<span class="line"><span style="color: #D4D4D4">    components/</span></span>
+<span class="line"><span style="color: #D4D4D4">      my-component.hbs</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #D4D4D4">app/</span></span>
+<span class="line"><span style="color: #D4D4D4">  components/</span></span>
+<span class="line"><span style="color: #D4D4D4">    my-component.hbs</span></span>
+<span class="line"><span style="color: #D4D4D4">    my-component.js</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/generating-files/file-structure/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="component-templates">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="component-templates">
+        Component Templates
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#component-templates" title="Component Templates">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__angle-brackets">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__angle-brackets">
+        Angle brackets component invocation
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__angle-brackets" title="Angle brackets component invocation">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Angle brackets are a way to invoke components in a template file. There's no change in behavior. Learn more about <a href="https://guides.emberjs.com/release/components/" target="_blank" rel="noopener noreferrer">features</a> and <a href="https://guides.emberjs.com/release/upgrading/current-edition/#toc_octane-upgrade-strategy" target="_blank" rel="noopener noreferrer">using codemods</a> to update your existing components.
+
+    </p>
+
+      <div id="ember7" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">my-component</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">MyComponent</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/angle-brackets/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__inline-vs-block">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__inline-vs-block">
+        Inline vs block components
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__inline-vs-block" title="Inline vs block components">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Angle brackets components can be used as either inline or block components. There's no change in behavior. <code>{{yield}}</code> looks and works the same. Learn more about <a href="https://guides.emberjs.com/release/components/block-content/" target="_blank" rel="noopener noreferrer">features</a> and <a href="https://guides.emberjs.com/release/upgrading/current-edition/" target="_blank" rel="noopener noreferrer">using codemods</a> to update your existing components.
+
+    </p>
+
+      <div id="ember8" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- inline --}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">my-component</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">{{!-- block --}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #C586C0">#my-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">as</span><span style="color: #D4D4D4"> |</span><span style="color: #9CDCFE">text</span><span style="color: #D4D4D4">|</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #D4D4D4">  some markup or </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">text</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #C586C0">/my-component</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- inline --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">MyComponent</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">{{!-- block --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">MyComponent</span><span style="color: #D4D4D4"> as |text|</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  some markup or </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">text</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">MyComponent</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/inline-vs-block/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__angle-brackets-nested">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__angle-brackets-nested">
+        Nesting components in your file structure
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__angle-brackets-nested" title="Nesting components in your file structure">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      You can nest components in your file structure, and use them in a template with angle brackets invocation. There's no change in behavior.
+
+    </p>
+
+      <div id="ember9" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">ui-files/my-component</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">UiFiles::MyComponent</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/angle-brackets-nested/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__template-named">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__template-named">
+        Using named argument
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__template-named" title="Using named argument">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      If a property was received from a parent component, refer to it with an <code>@</code>. There's no change in behavior. (<a href="https://guides.emberjs.com/release/components/component-arguments-and-html-attributes/" target="_blank" rel="noopener noreferrer">Visit the Ember Guides to learn more</a>.)
+
+    </p>
+
+      <div id="ember10" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> is the answer.</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">@answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> is the answer.</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/template-named/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__template-this">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__template-this">
+        Using own properties
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__template-this" title="Using own properties">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      If a property is defined in the JavaScript file for this component's template, use <code>this</code> when you refer to it. There's no change in behavior. Learn more about <a href="https://guides.emberjs.com/release/upgrading/current-edition/glimmer-components/" target="_blank" rel="noopener noreferrer">features</a> and <a href="https://guides.emberjs.com/release/upgrading/" target="_blank" rel="noopener noreferrer">using codemods</a> to update your existing components.
+
+    </p>
+
+      <div id="ember11" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> is the answer.</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> is the answer.</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/template-this/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__template-arguments-named">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__template-arguments-named">
+        Passing named arguments
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__template-arguments-named" title="Passing named arguments">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      When you pass an argument to a component, use an <code>@</code> symbol on the left hand side. There's no change in behavior. Learn more about <a href="https://guides.emberjs.com/release/components/component-arguments-and-html-attributes/" target="_blank" rel="noopener noreferrer">features</a> and <a href="https://guides.emberjs.com/release/upgrading/" target="_blank" rel="noopener noreferrer">using codemods</a> to update your existing components.
+
+    </p>
+
+      <div id="ember12" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">my-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">answer=answer</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">MyComponent</span><span style="color: #D4D4D4"> @</span><span style="color: #9CDCFE">answer=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">@answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/template-arguments-named/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__template-arguments-this">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__template-arguments-this">
+        Passing arguments defined on "this" component
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__template-arguments-this" title="Passing arguments defined on &quot;this&quot; component">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      If a property is coming from a template's own JavaScript file, remember to put a <code>this</code> before it and wrap it in curly braces. Learn more about <a href="https://guides.emberjs.com/release/components/component-arguments-and-html-attributes/" target="_blank" rel="noopener noreferrer">features</a> and <a href="https://guides.emberjs.com/release/upgrading/" target="_blank" rel="noopener noreferrer">using codemods</a> to update your existing components.
+
+    </p>
+
+      <div id="ember13" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">my-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">answer=answer</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">MyComponent</span><span style="color: #D4D4D4"> @</span><span style="color: #9CDCFE">answer=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/template-arguments-this/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__tag-name">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__tag-name">
+        All components are tagless
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__tag-name" title="All components are tagless">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In Octane, components don't have a default wrapper anymore, so you don't need <code>tagName</code>! Just put the tag right in the template.
+
+    </p>
+
+      <div id="ember14" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">child-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">tagName=</span><span style="color: #CE9178">&quot;ul&quot;</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">{{!-- child-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">&lt;!-- rendered output --&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">ul</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">&quot;ember209&quot;</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">class</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">&quot;ember-view&quot;</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">ul</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">ul</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">ChildComponent</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">ul</span><span style="color: #808080">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">{{!-- child-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">&lt;!-- rendered output --&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">ul</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span><span style="color: #D4D4D4">item</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">li</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">ul</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/tag-name/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-templates__element-id">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-templates__element-id">
+        Make your own elementId
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-templates__element-id" title="Make your own elementId">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Since components are tagless, there's no <code>elementId</code>, but you can generate your own. This is especially helpful for creating accessible forms.
+
+    </p>
+
+      <div id="ember15" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">didInsertElement</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">elementId</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">div</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">class=</span><span style="color: #CE9178">&quot;form-group&quot;</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">label</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">for=</span><span style="color: #CE9178">&quot;textInput-</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">elementId</span><span style="color: #DCDCAA">}}</span><span style="color: #CE9178">&quot;</span><span style="color: #808080">&gt;</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">inputLabelText</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">label</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">input</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">&quot;textInput-</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">elementId</span><span style="color: #DCDCAA">}}</span><span style="color: #CE9178">&quot;</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">name=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">inputName</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;text&quot;</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4"> </span><span style="color: #808080"> /&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">div</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">guidFor</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object/internals&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">InputTextComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">inputId</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">&#39;textInput-&#39;</span><span style="color: #D4D4D4"> + </span><span style="color: #DCDCAA">guidFor</span><span style="color: #D4D4D4">(</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">); </span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">div</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">class=</span><span style="color: #CE9178">&quot;form-group&quot;</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">label</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">for=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.inputId</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&gt;</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">@inputLabelText</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&lt;/</span><span style="color: #569CD6">label</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #808080">&lt;</span><span style="color: #569CD6">input</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.inputId</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">name=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">@inputName</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;text&quot;</span><span style="color: #D4D4D4"> </span></span>
+<span class="line"><span style="color: #D4D4D4"> </span><span style="color: #808080"> /&gt;</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">div</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-templates/element-id/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="component-properties">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="component-properties">
+        Component Properties
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#component-properties" title="Component Properties">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__js-boilerplate">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__js-boilerplate">
+        Component JavaScript Syntax
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__js-boilerplate" title="Component JavaScript Syntax">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      An Octane component imports from the <code>@glimmer</code> package namespace. It also uses native class syntax. Glimmer components have different API methods than classic components. If you aren't familiar with native classes, first check out the <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener noreferrer">documentation on MDN</a>. Then, learn more about Glimmer components from the <a href="https://guides.emberjs.com/release/components/component-state-and-actions/" target="_blank" rel="noopener noreferrer">Ember.js Guides</a> and the <a href="https://api.emberjs.com/ember/release/modules/@glimmer%2Fcomponent" target="_blank" rel="noopener noreferrer">API Reference</a>.
+
+    </p>
+
+      <div id="ember16" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">init</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">_super</span><span style="color: #D4D4D4">(...</span><span style="color: #569CD6">arguments</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">constructor</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">super</span><span style="color: #D4D4D4">(...</span><span style="color: #569CD6">arguments</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/js-boilerplate/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__js-properties">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__js-properties">
+        Declaring a property
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__js-properties" title="Declaring a property">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Properties follow native JavaScript class syntax. No commas!
+
+    </p>
+
+      <div id="ember17" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">min:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">max:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">100</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">min</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">max</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">100</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/js-properties/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__ddau">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__ddau">
+        Data Down, Actions Up
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__ddau" title="Data Down, Actions Up">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Octane components enforce "Data Down, Actions Up." When data is passed down to a component, the only way to change that data is to call an action that was passed in too. In another words, there is no two-way binding for component arguments.
+
+    </p>
+
+      <div id="ember18" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">// parent-component.js</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">count:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">0</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">child-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">count=count</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #D4D4D4">Count: </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.count</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">// child-component.js</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">actions:</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #DCDCAA">plusOne</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;count&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">get</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;count&#39;</span><span style="color: #D4D4D4">) + </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- child-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;plusOne&quot;</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Click Me</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">// parent-component.js</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/tracking&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ParentComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">count</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">plusOne</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">count</span><span style="color: #D4D4D4">++;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">ChildComponent</span><span style="color: #D4D4D4"> @</span><span style="color: #9CDCFE">plusOne=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.plusOne</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">Count: </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.count</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- child-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">on</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;click&quot;</span><span style="color: #D4D4D4"> @</span><span style="color: #9CDCFE">plusOne</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Click Me</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/ddau/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__args">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__args">
+        Component Arguments
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__args" title="Component Arguments">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In Octane, arguments are set on the <code>args</code> property, <code>this.args</code>. They are <em>not</em> set on the class instance, <code>this</code>. As a result, you can distinguish internal class values from external arguments. (Visit the Ember Guides to learn more about <a href="https://guides.emberjs.com/release/upgrading/current-edition/glimmer-components/#toc_arguments" target="_blank" rel="noopener noreferrer">arguments</a>.)
+
+    </p>
+
+      <div id="ember19" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">computed</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">prefix:</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;ISO&#39;</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">displayName:</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">computed</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;prefix,isoStandardNumber&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #569CD6">function</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #6A9955">/*</span></span>
+<span class="line"><span style="color: #6A9955">      There are two issues with this code:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A9955">      1. `prefix` may or may not be overriden from outside</span></span>
+<span class="line"><span style="color: #6A9955">      2. We can&#39;t tell if `isoStandardNumber` is a property or an argument</span></span>
+<span class="line"><span style="color: #6A9955">    */</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">`</span><span style="color: #569CD6">${</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">prefix</span><span style="color: #569CD6">}</span><span style="color: #CE9178"> </span><span style="color: #569CD6">${</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">isoStandardNumber</span><span style="color: #569CD6">}</span><span style="color: #CE9178">`</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">/* Rest of the code omitted */</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">prefix</span><span style="color: #D4D4D4"> = </span><span style="color: #CE9178">&#39;ISO&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">get</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">displayName</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">`</span><span style="color: #569CD6">${</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">prefix</span><span style="color: #569CD6">}</span><span style="color: #CE9178"> </span><span style="color: #569CD6">${</span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">args</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">isoStandardNumber</span><span style="color: #569CD6">}</span><span style="color: #CE9178">`</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">/* Rest of the code omitted */</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/args/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__get-and-set">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__get-and-set">
+        No more get and set on components
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__get-and-set" title="No more get and set on components">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Octane components do not use <code>this.get</code> or <code>this.set</code>. Access and modify properties directly, the same as you would in a regular JavaScript class.
+
+    </p>
+
+      <div id="ember20" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">count:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">actions:</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #DCDCAA">minusOne</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;count&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">get</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;count&#39;</span><span style="color: #D4D4D4">) - </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/tracking&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">count</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">minusOne</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">count</span><span style="color: #D4D4D4"> = </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">count</span><span style="color: #D4D4D4"> - </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/get-and-set/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__tracked-vs-cp">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__tracked-vs-cp">
+        Use @tracked and getters instead of computed properties
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__tracked-vs-cp" title="Use @tracked and getters instead of computed properties">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Label the properties that should be tracked. Getters will be updated automatically.
+
+    </p>
+
+      <div id="ember21" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">computed</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">index:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">nextIndex:</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">computed</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;index&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #569CD6">function</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> + </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  })</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/tracking&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">tracked</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">get</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">nextIndex</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> + </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/tracked-vs-cp/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-properties__computed-decorator">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-properties__computed-decorator">
+        @computed decorator
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-properties__computed-decorator" title="@computed decorator">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In Octane, it is recommended to rewrite a computed property as tracked property. In case that isn't possible (maybe you need caching), the <code>@computed</code> decorator is available.
+
+    </p>
+
+      <div id="ember22" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">computed</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">index:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">nextIndex:</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">computed</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;index&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #569CD6">function</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> + </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  })</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">computed</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">0</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #DCDCAA">computed</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;index&#39;</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">get</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">nextIndex</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">index</span><span style="color: #D4D4D4"> + </span><span style="color: #B5CEA8">1</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-properties/computed-decorator/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="actions">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="actions">
+        Actions
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#actions" title="Actions">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="actions__actions">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="actions__actions">
+        Use @action, {{on}}, and {{fn}} instead of {{action}}
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#actions__actions" title="Use @action, {{on}}, and {{fn}} instead of {{action}}">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In the JavaScript class, use the <code>@action</code> decorator to mark the function that you want to call from the template. In the template, use the <code>{{on}}</code> modifier to decide when to call the function. If you need to pass an argument to the function, use <code>{{fn}}</code> helper too. (<a href="https://guides.emberjs.com/release/components/component-state-and-actions/#toc_html-modifiers-and-actions" target="_blank" rel="noopener noreferrer">Visit the Ember Guides to learn more</a>.)
+
+    </p>
+
+      <div id="ember23" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">actions:</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #DCDCAA">sayHello</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;Hello, world!&#39;</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #DCDCAA">saySomethingElse</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">message</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">      </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">message</span><span style="color: #D4D4D4">)</span></span>
+<span class="line"><span style="color: #D4D4D4">    }</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">onclick=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;sayHello&quot;</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Say hello!</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">onclick=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;saySomethingElse&quot;</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;Cheese!&quot;</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Say cheese!</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">sayHello</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;Hello, world!&#39;</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">saySomethingElse</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">message</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #9CDCFE">console</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">log</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">message</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">on</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;click&quot;</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">this.sayHello</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Say hello!</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">button</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">type=</span><span style="color: #CE9178">&quot;button&quot;</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">on</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;click&quot;</span><span style="color: #D4D4D4"> (</span><span style="color: #9CDCFE">fn</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">this.saySomethingElse</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&quot;Cheese!&quot;</span><span style="color: #D4D4D4">)</span><span style="color: #DCDCAA">}}</span></span>
+<span class="line"><span style="color: #808080">&gt;</span></span>
+<span class="line"><span style="color: #D4D4D4">  Say cheese!</span></span>
+<span class="line"><span style="color: #808080">&lt;/</span><span style="color: #569CD6">button</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/actions/actions/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="actions__template-arguments-default">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="actions__template-arguments-default">
+        Setting the default value of an argument
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#actions__template-arguments-default" title="Setting the default value of an argument">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      Because an argument is read-only, you cannot set its default value in the consuming class. Instead, you can create a getter to wrap the argument and <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator/" target="_blank" rel="noopener noreferrer">provide the default value</a>.
+
+    </p>
+
+      <div id="ember24" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">child-component</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">answer=answer</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">// child-component.js</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #9CDCFE">answer:</span><span style="color: #D4D4D4"> </span><span style="color: #B5CEA8">42</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">{{!-- parent-component.hbs --}}</span></span>
+<span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">ChildComponent</span><span style="color: #D4D4D4"> @</span><span style="color: #9CDCFE">answer=</span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">this.answer</span><span style="color: #DCDCAA">}}</span><span style="color: #D4D4D4"> /</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #6A9955">// child-component.js</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">ChildComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">get</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">answer</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #C586C0">return</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">args</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">answer</span><span style="color: #D4D4D4"> ?? </span><span style="color: #B5CEA8">42</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/actions/template-arguments-default/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="actions__mixins">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="actions__mixins">
+        Mixins
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#actions__mixins" title="Mixins">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      You cannot use mixins on anything that uses native class syntax (e.g. components that import from <code>@glimmer/component</code>). The migration strategy depends on your use case. If your app depends on an addon that uses mixins, it may be best to continue using classic components until the addon is Octane-ready.
+
+    </p>
+
+      <div id="ember25" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">SomeMixin</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;some-addon&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">SomeMixin</span><span style="color: #D4D4D4">, {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #6A9955">// ...</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+<!---->
+          <p>
+            See <a href="https://www.pzuraq.com/do-you-need-ember-object/" target="_blank" rel="noopener noreferrer">Do you need Ember Object?</a> for alternatives to mixins, which include utility functions, services, delegates, and class decorators.
+
+          </p>
+      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/actions/mixins/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="component-lifecycle">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="component-lifecycle">
+        Component Lifecycle
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#component-lifecycle" title="Component Lifecycle">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-lifecycle__constructors">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-lifecycle__constructors">
+        Use constructor instead of init
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-lifecycle__constructors" title="Use constructor instead of init">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      <code>constructor</code> comes from native JavaScript class. You can use this hook to set up the component class, similarly to what you might have done in <code>init</code>. (Visit the Ember Guides to learn more about <a href="https://guides.emberjs.com/release/in-depth-topics/native-classes-in-depth/#toc_constructor" target="_blank" rel="noopener noreferrer">constructor</a> and <a href="https://guides.emberjs.com/release/in-depth-topics/native-classes-in-depth/#toc_constructor-in-extends" target="_blank" rel="noopener noreferrer">super</a>.)
+
+    </p>
+
+      <div id="ember26" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">init</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">_super</span><span style="color: #D4D4D4">(...</span><span style="color: #569CD6">arguments</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">set</span><span style="color: #D4D4D4">(</span><span style="color: #CE9178">&#39;answer&#39;</span><span style="color: #D4D4D4">, </span><span style="color: #B5CEA8">42</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #569CD6">constructor</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">owner</span><span style="color: #D4D4D4">, </span><span style="color: #9CDCFE">args</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">super</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">owner</span><span style="color: #D4D4D4">, </span><span style="color: #9CDCFE">args</span><span style="color: #D4D4D4">);</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #569CD6">this</span><span style="color: #D4D4D4">.</span><span style="color: #9CDCFE">answer</span><span style="color: #D4D4D4"> = </span><span style="color: #B5CEA8">42</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-lifecycle/constructors/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-lifecycle__will-destroy">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-lifecycle__will-destroy">
+        Use willDestroy instead of willDestroyElement
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-lifecycle__will-destroy" title="Use willDestroy instead of willDestroyElement">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      <code>willDestroy</code> is the only other lifecycle hook (besides <code>constructor</code>) that Glimmer components have. You can use this hook to tear down the component class, similarly to what you might have done in <code>willDestroyElement</code>. (Visit the Ember Guides to learn more about <a href="https://guides.emberjs.com/release/upgrading/current-edition/glimmer-components/#toc_lifecycle-and-properties" target="_blank" rel="noopener noreferrer">lifecycle of Glimmer components</a>.)
+
+    </p>
+
+      <div id="ember27" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">willDestroyElement</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #6A9955">// Remove event listener</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">willDestroy</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #6A9955">// Remove event listener</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-lifecycle/will-destroy/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-lifecycle__render-modifiers">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-lifecycle__render-modifiers">
+        Element Modifiers
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-lifecycle__render-modifiers" title="Element Modifiers">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      If you install <a href="https://github.com/emberjs/ember-render-modifiers" target="_blank" rel="noopener noreferrer">@ember/render-modifiers</a>, you get <code>{{did-insert}}</code> and <code>{{did-update}}</code> modifiers. You may use them to replace a classic component's lifecycle hooks <code>didInsertElement</code>, <code>didRender</code>, and <code>didUpdate</code>.
+
+    </p>
+
+      <div id="ember28" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+<!---->
+          <p>
+            Have Ember apps at version 2.18 or higher? You can use these modifiers to start converting classic components to Glimmer ones.
+
+          </p>
+      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #DCDCAA">ember</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">install</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">@ember/render-modifiers</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-lifecycle/render-modifiers/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="component-lifecycle__did-insert">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="component-lifecycle__did-insert">
+        Use {{did-insert}} instead of didInsertElement
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#component-lifecycle__did-insert" title="Use {{did-insert}} instead of didInsertElement">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      If you used the <code>didInsertElement</code> hook, consider making an action. You can call the action with the <code>{{did-insert}}</code> modifier. Use the <code>@action</code> decorator to bind the correct context (<code>this</code>). (Visit the Ember Guides to learn more about <a href="https://guides.emberjs.com/release/upgrading/current-edition/glimmer-components/#toc_lifecycle-and-properties" target="_blank" rel="noopener noreferrer">lifecycle of Glimmer components</a>.)
+
+    </p>
+
+      <div id="ember29" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">canvas</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">id</span><span style="color: #D4D4D4">=</span><span style="color: #CE9178">&quot;my-canvas&quot;</span><span style="color: #808080">&gt;&lt;/</span><span style="color: #569CD6">canvas</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4">.</span><span style="color: #DCDCAA">extend</span><span style="color: #D4D4D4">({</span></span>
+<span class="line"><span style="color: #D4D4D4">  </span><span style="color: #DCDCAA">didInsertElement</span><span style="color: #D4D4D4">() {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #6A9955">// Find the canvas element by id. Then, create a graph.</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">});</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #808080">&lt;</span><span style="color: #569CD6">canvas</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">did-insert</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">this.createGraph</span><span style="color: #DCDCAA">}}</span><span style="color: #808080">&gt;&lt;/</span><span style="color: #569CD6">canvas</span><span style="color: #808080">&gt;</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> </span><span style="color: #9CDCFE">Component</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@glimmer/component&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"><span style="color: #C586C0">import</span><span style="color: #D4D4D4"> { </span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> } </span><span style="color: #C586C0">from</span><span style="color: #D4D4D4"> </span><span style="color: #CE9178">&#39;@ember/object&#39;</span><span style="color: #D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C586C0">export</span><span style="color: #D4D4D4"> </span><span style="color: #C586C0">default</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">class</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">MyComponent</span><span style="color: #D4D4D4"> </span><span style="color: #569CD6">extends</span><span style="color: #D4D4D4"> </span><span style="color: #4EC9B0">Component</span><span style="color: #D4D4D4"> {</span></span>
+<span class="line"><span style="color: #D4D4D4">  @</span><span style="color: #9CDCFE">action</span><span style="color: #D4D4D4"> </span><span style="color: #DCDCAA">createGraph</span><span style="color: #D4D4D4">(</span><span style="color: #9CDCFE">element</span><span style="color: #D4D4D4">) {</span></span>
+<span class="line"><span style="color: #D4D4D4">    </span><span style="color: #6A9955">// You have the canvas element. Now make the graph!</span></span>
+<span class="line"><span style="color: #D4D4D4">  }</span></span>
+<span class="line"><span style="color: #D4D4D4">}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/component-lifecycle/did-insert/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+    <div class="_guide-section-container_1h71my">
+        <section aria-labelledby="routes">
+    <div class="_title-container_6yfw8t">
+      <h2 class="_title_6yfw8t" id="routes">
+        Routes
+      </h2>
+
+      <a class="_permalink_6yfw8t" href="#routes" title="Routes">
+        §
+      </a>
+    </div>
+
+      <div class="_subsection-container_6yfw8t">
+          <section aria-labelledby="routes__model-access">
+    <div class="_title-container_1fds5d">
+      <h3 class="_title_1fds5d" id="routes__model-access">
+        Accessing a route's model
+      </h3>
+
+      <a class="_permalink_1fds5d" href="#routes__model-access" title="Accessing a route's model">
+        §
+      </a>
+    </div>
+
+    <p class="_description_1fds5d">
+      In a route template, the <code>model</code> comes from an outside context. Use <code>@model</code> to access the result from the route's <code>model</code> hook.
+
+    </p>
+
+      <div id="ember30" class="ember-view container-query _code-examples-container_1fds5d">
+    
+      <div class="_ember-classic_1fds5d">
+        <h4 class>
+          Older patterns
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #D4D4D4">First name: </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">model.firstName</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+
+      <div class="_ember-octane_1fds5d">
+        <h4 class>
+          Request Service
+        </h4>
+
+          <div class="_code-snippet_1fds5d">
+              <div class="shiki-code-block" style>
+<!---->  <div class="shiki-code-block__code
+      line-numbers">
+    <div>
+        <pre class="shiki dark-plus" style="background-color: #1E1E1E" tabindex="0"><code><span class="line"><span style="color: #D4D4D4">First name: </span><span style="color: #DCDCAA">{{</span><span style="color: #9CDCFE">@model.firstName</span><span style="color: #DCDCAA">}}</span></span></code></pre>
+    </div>
+      <button class="copy-button " aria-label="copy" type="button"></button>
+  </div>
+</div>
+
+          </div>
+
+<!---->      </div>
+    
+  </div>
+
+
+    <div class="_edit-link-container_1fds5d">
+      <a class href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet/edit/main/translations/routes/model-access/en-us.yaml" rel="noopener noreferrer" target="_blank">
+        Edit Translation
+      </a>
+    </div>
+  </section>
+
+      </div>
+  </section>
+
+    </div>
+</main><script type="x/boundary" id="fastboot-body-end"></script>
+
+    <script src="/ember-data-request-service-cheat-sheet/assets/vendor-0edf2ebacf7790b0367c99cc00215b19.js"></script>
+<script src="/ember-data-request-service-cheat-sheet/assets/chunk.207.ad8ade59e4f57b25f323.js"></script>
+<script src="/ember-data-request-service-cheat-sheet/assets/chunk.143.f518b8978e626cee994b.js"></script>
+    <script src="/ember-data-request-service-cheat-sheet/assets/ember-data-request-service-cheat-sheet-828b889c9543387e89b6bb4ebd376e31.js"></script>
+
+    
+  </body>
+</html>

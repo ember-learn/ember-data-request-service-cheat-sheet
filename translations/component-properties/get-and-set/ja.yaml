@@ -1,4 +1,0 @@
-title: コンポーネントでgetとsetを使う必要はない
-description: >
-  Octaneコンポーネントでは、'<code>'this.get'</code>'や'<code>'this.set'</code>'を使いません。
-  プロパティは、通常のJavaScriptクラスのように直接アクセスし編集します。

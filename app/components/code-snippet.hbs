@@ -1,8 +1,0 @@
-{{#let (get-code-snippet @fileName) as |snippet|}}
-  <CodeBlock
-    data-test-code-snippet
-    @code={{snippet.source}}
-    @language={{snippet.language}}
-    @showLineNumbers={{true}}
-  />
-{{/let}}
