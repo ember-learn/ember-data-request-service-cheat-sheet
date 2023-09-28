@@ -5,7 +5,7 @@ layout:
     description-1: >
       このガイドは、'<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">'Ember.js Octane'</a>'を使うためのチートシートです。
       すべてを網羅しているわけではありませんが、始めるには十分です！
-      プルリクエストを'<a href="https://github.com/ember-learn/ember-octane-vs-classic-cheat-sheet" target="_blank" rel="noopener noreferrer">'GitHubリポジトリ'</a>'でお待ちしてます。
+      プルリクエストを'<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'GitHubリポジトリ'</a>'でお待ちしてます。
     description-2: >
       より詳細なアップグレードパスや、Octaneで導入された違いについての情報は、'<a href="https://guides.emberjs.com/release/upgrading/" target="_blank" rel="noopener noreferrer">'The Octane Upgrading Guide'</a>'を参照してください。
 

@@ -13,11 +13,11 @@ This is an Ember app, so the usual steps follow:
 
 1. Fork and clone this repo.
     ```bash
-    git clone git@github.com:<your GitHub handle>/ember-octane-vs-classic-cheat-sheet.git
+    git clone git@github.com:<your GitHub handle>/ember-data-request-service-cheat-sheet.git
     ```
 1. Change directory.
     ```bash
-    cd ember-octane-vs-classic-cheat-sheet
+    cd ember-data-request-service-cheat-sheet
     ```
 1. Install packages.
     ```bash

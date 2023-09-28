@@ -1,9 +1,9 @@
-[![This project uses GitHub Actions for continuous integration.](https://github.com/ember-learn/ember-octane-vs-classic-cheat-sheet/workflows/CI/CD/badge.svg)](https://github.com/ember-learn/ember-octane-vs-classic-cheat-sheet/actions?query=workflow%3ACI%2FCD)
-[![This project uses Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/Ember/ember-octane-vs-classic-cheat-sheet)
+[![This project uses GitHub Actions for continuous integration.](https://github.com/ember-learn/ember-data-request-service-cheat-sheet/workflows/CI/CD/badge.svg)](https://github.com/ember-learn/ember-data-request-service-cheat-sheet/actions?query=workflow%3ACI%2FCD)
+[![This project uses Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/Ember/ember-data-request-service-cheat-sheet)
 
-# Ember Octane vs Classic Cheat Sheet
+# EmberData Request Service Cheat Sheet
 
-Check out [the deployed app](https://ember-learn.github.io/ember-octane-vs-classic-cheat-sheet/). Yep, it uses Ember Octane!
+Check out [the deployed app](https://ember-learn.github.io/ember-data-request-service-cheat-sheet/). Yep, it uses Ember Octane!
 
 You can see side-by-side examples of [Ember Octane](https://emberjs.com/editions/octane) and Ember Classic.
 
