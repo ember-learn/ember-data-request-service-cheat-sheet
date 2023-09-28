@@ -3,9 +3,13 @@
 
 # EmberData Request Service Cheat Sheet
 
-Check out [the deployed app](https://ember-learn.github.io/ember-data-request-service-cheat-sheet/). Yep, it uses Ember Octane!
+This is a work-in-progress cheat sheet to aid in writing documentation
+for and teaching EmberData's Request Service.
+To learn more about the Request Service, check out
+[RFC 860](https://rfcs.emberjs.com/id/0860-ember-data-request-service/).
 
-You can see side-by-side examples of [Ember Octane](https://emberjs.com/editions/octane) and Ember Classic.
+Visit [the deployed app](https://ember-learn.github.io/ember-data-request-service-cheat-sheet/) for side-by-side examples of EmberData's Request Service
+and older EmberData patterns.
 
 
 ## How to Contribute
