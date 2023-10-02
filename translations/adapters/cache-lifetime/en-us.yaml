@@ -1,0 +1,4 @@
+title: Cache lifetime
+description: >
+  In the past, cache lifetimes for single resources were controlled by either supplying the '<code>'reload'</code>' and '<code>'backgroundReload'</code>' options or by the Adapter's hooks for '<code>'shouldReloadRecord'</code>', '<code>'shouldReloadAll'</code>', '<code>'shouldBackgroundReloadRecord'</code>' and '<code>'shouldBackgroundReloadAll'</code>'.
+  This behavior will now be controlled by the combination of either supplying '<code>'cacheOptions'</code>' on the associated '<code>'RequestInfo'</code>' or by supplying a '<code>'lifetimes'</code>' service to the '<code>'Store'</code>'.
