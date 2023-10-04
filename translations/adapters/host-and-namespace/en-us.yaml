@@ -1,5 +1,5 @@
 title: Default Host and Namespace
 description: >
-  To set default '<code>'host'</code>' and '<code>'namespace'</code>' for requests, you can use '<code>'setBuildURLConfig'</code>' method of '<code>'@ember-data/request-utils'</code>' package.
+  To set the default '<code>'host'</code>' and '<code>'namespace'</code>' for requests, you can use the '<code>'setBuildURLConfig'</code>' method of '<code>'@ember-data/request-utils'</code>' package.
   <br />
-  This is module-level function, so you can do it anywhere in application, i.e. in your '<code>'services/request-manager.js'</code>' or '<code>'services/store.js'</code>' file.
+  This is a module-level function, so you can do it anywhere in your application, i.e. in your '<code>'services/request-manager.js'</code>' or '<code>'services/store.js'</code>' file.
