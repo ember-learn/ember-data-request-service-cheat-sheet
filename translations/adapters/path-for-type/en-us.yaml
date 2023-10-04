@@ -1,5 +1,5 @@
 title: Use request builders instead of pathForType
 description: >
-  To modify URL for request you can use '<code>'resourcePath'</code>' option for every request builder. Default configuration for '<code>'JSON:API'</code>', '<code>'REST'</code>', and '<code>'ActiveRecord'</code>' builders will be provided by EmberData.
+  To modify a URL for a request you can use the '<code>'resourcePath'</code>' option for every request builder. Default configuration for '<code>'JSON:API'</code>', '<code>'REST'</code>', and '<code>'ActiveRecord'</code>' builders will be provided by EmberData.
   <br />
   We recommend creating your own utility file with request builders that suite your backend's needs.
