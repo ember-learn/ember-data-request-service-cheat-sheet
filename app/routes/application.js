@@ -11,6 +11,21 @@ export default class ApplicationRoute extends Route {
             classicFiles: ['old.js'],
             octaneFiles: ['new.js', 'replicate-store.js', 'own-builder.js'],
           },
+          {
+            id: 'find-all',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+          {
+            id: 'query',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+          {
+            id: 'query-record',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
         ],
       },
       {

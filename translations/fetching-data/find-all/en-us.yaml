@@ -1,0 +1,3 @@
+title: findAll
+description: |
+  There is no direct replacement for <code>findAll</code>, you should just use <code>query</code> without options instead.
