@@ -1,1 +1,1 @@
-const user = await store.queryRecord('user', params);
+const user = await this.store.queryRecord('user', params);
