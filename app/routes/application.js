@@ -44,6 +44,16 @@ export default class ApplicationRoute extends Route {
         ],
       },
       {
+        id: 'deleting-data',
+        subsections: [
+          {
+            id: 'delete-record',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+        ],
+      },
+      {
         id: 'adapters',
         subsections: [
           {

@@ -1,0 +1,2 @@
+title: deleteRecord
+description: To delete an existing record using Ember Data you should use <code>deleteRecord</code> builder to issue the request.
