@@ -29,6 +29,21 @@ export default class ApplicationRoute extends Route {
         ],
       },
       {
+        id: 'updating-data',
+        subsections: [
+          {
+            id: 'create-record',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+          {
+            id: 'save-record',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+        ],
+      },
+      {
         id: 'adapters',
         subsections: [
           {

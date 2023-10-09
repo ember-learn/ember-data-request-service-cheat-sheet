@@ -1,0 +1,7 @@
+title: Creating/Updating Data
+description: >
+  For requests that are expected to send a "body" to the API applications may choose to either serialize the body at the point of the request or to implement a Handler for the RequestManager to do so.
+
+  EmberData does not provide a default handler which serializes because this is a unique concern for every app. However, EmberData does provide utilities on both the Cache and for some of the builders to make this easy.
+
+  For JSON:API we show the "at point of request" approach using the utils provided by the @ember-data/json-api package here.
