@@ -1,0 +1,2 @@
+title: queryRecord
+description: There is no direct replacement of <code>queryRecord</code>. You can just use <code>query</code> with <code>limit=1</code> option.
