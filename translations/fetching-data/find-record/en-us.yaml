@@ -1,0 +1,3 @@
+title: Find Record
+description: |
+  Examples here are shown for apps that use JSON:API. Apps using other paradigms should use the builders for REST or ActiveRecord if applicable, or author their own (or a new community lib!) if not.
