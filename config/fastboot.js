@@ -1,10 +1,12 @@
 /* eslint-disable no-redeclare */
 /* global ReadableStream, WritableStream, TransformStream, Headers */
+import fetch from 'node-fetch';
+
 module.exports = function () {
   return {
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
-        fetch: require('node-fetch'),
+        fetch,
         AbortController,
         ReadableStream:
           typeof ReadableStream !== 'undefined'

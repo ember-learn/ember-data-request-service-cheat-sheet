@@ -1,4 +1,0 @@
-title: Make your own elementId
-description: >
-  Since components are tagless, there's no '<code>'elementId'</code>', but you can generate your own.
-  This is especially helpful for creating accessible forms.
