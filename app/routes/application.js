@@ -34,12 +34,12 @@ export default class ApplicationRoute extends Route {
           {
             id: 'create-record',
             classicFiles: ['old.js'],
-            octaneFiles: ['new.js'],
+            octaneFiles: ['in-place-body.js', 'handler.js'],
           },
           {
             id: 'save-record',
             classicFiles: ['old.js'],
-            octaneFiles: ['new.js'],
+            octaneFiles: ['new.js', 'handler.js'],
           },
         ],
       },
@@ -48,7 +48,7 @@ export default class ApplicationRoute extends Route {
         subsections: [
           {
             id: 'delete-record',
-            classicFiles: ['old.js'],
+            classicFiles: ['old.js', 'destroy.js'],
             octaneFiles: ['new.js'],
           },
         ],
