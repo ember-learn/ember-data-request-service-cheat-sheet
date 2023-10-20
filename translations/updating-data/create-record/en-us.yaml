@@ -1,0 +1,2 @@
+title: createRecord
+description: To create a new record using Ember Data you should use <code>createRecord</code> request and attach <code>"body"</code> to it. In case of JSON:API backend - you can user <code>serializeResources</code> request utility.

@@ -1,0 +1,2 @@
+title: saveRecord / updateRecord
+description: To update record, you should send <code>updateRecord</code> request to your backend and attach <code>"body"</code> to it. Based on your backend server needs, you can use <code>serializeResources</code> or <code>serializePatch</code> request utilities.
