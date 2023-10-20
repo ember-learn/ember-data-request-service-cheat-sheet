@@ -1,1 +1,1 @@
-const users = await store.query('user', { filter: { name: 'John' } });
+const users = await this.store.query('user', { filter: { name: 'John' } });
