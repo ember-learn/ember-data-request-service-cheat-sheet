@@ -6,9 +6,9 @@ user.name = 'Chris';
 const request = updateRecord(user);
 request.body = JSON.stringify(
   serializePatch(
-    this.store.cache,
+    store.cache,
     recordIdentifierFor(user)
   )
 );
 
-await this.store.request(request);
+await store.request(request);

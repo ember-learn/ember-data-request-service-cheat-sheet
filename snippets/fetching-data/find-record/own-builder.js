@@ -35,11 +35,11 @@ export default {
 
 // Somewhere in app
 const fetchOptions = findRecord('user', '1', { include: 'friends' });
-const result = await this.store.request(fetchOptions)
+const result = await store.request(fetchOptions)
 const user = result.content.data
 // or using identifier for findRecord builder
 const fetchOptions = findRecord({ type: 'user', id: '1' }, { include: 'friends' });
-const result = await this.store.request(fetchOptions)
+const result = await store.request(fetchOptions)
 const user = result.content.data
 
 

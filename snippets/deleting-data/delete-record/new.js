@@ -1,6 +1,6 @@
 import { deleteRecord } from '@ember-data/json-api/request';
 
-const user = this.store.peekRecord('user', '1');
-this.store.deleteRecord(user);
-await this.store.request(deleteRecord(user));
-this.store.unloadRecord(user);
+const user = store.peekRecord('user', '1');
+store.deleteRecord(user);
+await store.request(deleteRecord(user));
+store.unloadRecord(user);

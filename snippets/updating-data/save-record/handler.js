@@ -39,13 +39,13 @@ export default class extends RequestManager {
 // then in your app just use updateRecord builder and let handler care about serialization
 import { updateRecord } from '@ember-data/json-api/request';
 
-const request = updateRecord(record);
-await this.store.request(request);
+const requestObj = updateRecord(record);
+await store.request(requestObj);
 
 // or overwrite body if you need to, handler will not touch it
 import { updateRecord } from '@ember-data/rest/request';
 
-const record = this.store.updateRecord('feature', { name: "rest-enabled" });
+const record = store.updateRecord('feature', { name: "rest-enabled" });
 const request = updateRecord(record);
 // For some reason your endpoint for 'features' is not JSON:API compliant
 request.body = JSON.stringify({ name: 'rest-enabled' })
