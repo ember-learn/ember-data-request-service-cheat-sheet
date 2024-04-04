@@ -1,60 +1,40 @@
+// utils/my-backend-request-builders.js
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
-import { recordIdentifierFor } from '@ember-data/store';
-
-import {
-  findRecord as restFindRecord,
-  query as restQuery,
-  createRecord as restCreateRecord,
-  updateRecord as restUpdateRecord,
-  deleteRecord as restDeleteRecord,
-} from '@ember-data/rest/request';
+import { buildBaseURL, buildQueryParams } from '@ember-data/request-utils';
 
 const _customResourcePath = (identifierType) => {
   return `collections/${camelize(pluralize(identifierType))}/records`;
 };
 
-const findRecord = (identifierType, id, options) => {
-  options = {
-    ...options,
-    resourcePath: _customResourcePath(identifierType),
-  };
-  return restFindRecord(identifierType, id, options);
-};
+async function findRecord(typeOrIdentifier, idOrOptions, maybeOptions) {
+  const identifier = typeof typeOrIdentifier === 'string' ? { type: typeOrIdentifier, id } : typeOrIdentifier;
+  const options = ((typeof typeOrIdentifier === 'string' ? maybeOptions : idOrOptions) || {});
 
-const query = (identifierType, query, options) => {
-  options = {
-    ...options,
-    resourcePath: _customResourcePath(identifierType),
-  };
-  return restQuery(identifierType, query, options);
-};
-
-const createRecord = (record, options) => {
-  const identifier = recordIdentifierFor(record);
-  options = {
-    ...options,
+  const urlOptions = {
+    op: 'findRecord',
+    identifier,
     resourcePath: _customResourcePath(identifier.type),
   };
-  return restCreateRecord(record, options);
-};
 
-const updateRecord = (record, options) => {
-  const identifier = recordIdentifierFor(record);
-  options = {
-    ...options,
-    resourcePath: _customResourcePath(identifier.type),
+  const url = buildBaseURL(urlOptions);
+  const headers = new Headers();
+  headers.append('Accept', 'application/vnd.api+json');
+  headers.append('Content-Type', 'application/vnd.api+json');
+
+  return {
+    url: options.include?.length
+      ? `${url}?${buildQueryParams({ include: options.include }, options.urlParamsSettings)}`
+      : url,
+    method: 'GET',
+    headers,
+    op: 'findRecord',
+    records: [identifier],
   };
-  return restUpdateRecord(record, options);
+
+}
+
+export default {
+  findRecord
 };
 
-const deleteRecord = (record, options) => {
-  const identifier = recordIdentifierFor(record);
-  options = {
-    ...options,
-    resourcePath: _customResourcePath(identifier.type),
-  };
-  return restDeleteRecord(record, options);
-};
-
-export { findRecord, query, createRecord, updateRecord, deleteRecord };
