@@ -1,8 +1,8 @@
 // Replicate old on store methods
 import { findRecord } from '@ember-data/json-api/request';
-import DataStore from '@ember-data/store'
+import BaseStore from 'ember-data/store'
 
-export default class Store extends DataStore {
+export default class Store extends BaseStore {
   async findRecord(typeOrIdentifier, id, options) {
     const result = await this.request(findRecord(typeOrIdentifier, id, options));
     // but you might want to return whole result object, as it has meta, errors, links, etc.
@@ -11,4 +11,4 @@ export default class Store extends DataStore {
 }
 
 // Somewhere in app
-const user = await this.store.findRecord('user', '1')
+const user = await store.findRecord('user', '1')

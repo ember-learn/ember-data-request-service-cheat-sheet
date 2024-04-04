@@ -1,14 +1,15 @@
 import { LifetimesService } from '@ember-data/request-utils';
-import DataStore from '@ember-data/store';
+import BaseStore from 'ember-data/store';
 
-export default class Store extends DataStore {
+export default class Store extends BaseStore {
   constructor(args) {
     super(args);
     // This is default configuration that would be set automatically be Ember Data
-    // this.lifetimes = new LifetimesService(this, {
-    //   apiCacheSoftExpires: 30_000,
-    //   apiCacheHardExpires: 60_000
-    // });
+    this.lifetimes = new LifetimesService(this, {
+      apiCacheSoftExpires: 30_000,
+      apiCacheHardExpires: 60_000
+    });
+    // Or you can overwrite it with your own logic
     this.lifetimes = {
       isHardExpired(identifier) {
         const cached = this.store.cache.peekRequest(identifier);
