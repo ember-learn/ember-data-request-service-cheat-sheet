@@ -32,7 +32,6 @@ export default class extends RequestManager {
   constructor(args) {
     super(args);
     this.use([updatesHandler, Fetch]);
-    this.useCache(CacheHandler);
   }
 }
 
