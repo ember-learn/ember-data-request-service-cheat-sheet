@@ -76,6 +76,16 @@ export default class ApplicationRoute extends Route {
           },
         ],
       },
+      {
+        id: 'serializers',
+        subsections: [
+          {
+            id: 'general',
+            classicFiles: ['old.js'],
+            octaneFiles: ['utils.js', 'app-code.js', 'handler.js'],
+          },
+        ],
+      },
     ];
   }
 }
