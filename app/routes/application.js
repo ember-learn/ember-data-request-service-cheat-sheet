@@ -8,8 +8,8 @@ export default class ApplicationRoute extends Route {
         subsections: [
           {
             id: 'find-record',
-            classicFiles: ['old.js'],
-            octaneFiles: ['new.js', 'replicate-store.js', 'own-builder.js'],
+            classicFiles: ['old.js', 'old.ts'],
+            octaneFiles: ['new.js', 'new.ts', 'own-builder.ts'],
           },
           {
             id: 'find-all',

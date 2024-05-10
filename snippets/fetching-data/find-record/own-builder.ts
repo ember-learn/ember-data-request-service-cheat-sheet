@@ -1,10 +1,21 @@
 // Bring your own builder
 import { buildBaseURL, buildQueryParams } from '@ember-data/request-utils'
 import { pluralize } from 'ember-inflector';
+import type { RequestSignature } from '@warp-drive/core-types/symbols';
+import type { TypeFromInstance } from '@warp-drive/core-types/record';
+import type { FindRecordOptions } from '@warp-drive/core-types/request';
 
-async function findRecord(typeOrIdentifier, idOrOptions, maybeOptions) {
-  const identifier = typeof typeOrIdentifier === 'string' ? { type: typeOrIdentifier, id } : typeOrIdentifier;
-  const options = ((typeof typeOrIdentifier === 'string' ? maybeOptions : idOrOptions) || {});
+type MyRequest<Type> = {
+  url: string
+  method: 'GET'
+  headers: Headers
+  op: 'findRecord'
+  records: Array<{ type: TypeFromInstance<Type>, id: string }>;
+  [RequestSignature]: Type
+}
+
+function findRecord<Type>(type: TypeFromInstance<Type>, id: string, options: FindRecordOptions<Type>): MyRequest<Type> {
+  const identifier = { type, id };
 
   const urlOptions = {
     op: 'findRecord',
@@ -17,7 +28,7 @@ async function findRecord(typeOrIdentifier, idOrOptions, maybeOptions) {
   headers.append('Accept', 'application/vnd.api+json');
   headers.append('Content-Type', 'application/vnd.api+json');
 
-  return {
+  const result = {
     url: options.include?.length
       ? `${url}?${buildQueryParams({ include: options.include }, options.urlParamsSettings)}`
       : url,
@@ -27,19 +38,11 @@ async function findRecord(typeOrIdentifier, idOrOptions, maybeOptions) {
     records: [identifier],
   };
 
+  return result as MyRequest<Type>;
 }
 
 export default {
   findRecord
 };
-
-// Somewhere in app
-const fetchOptions = findRecord('user', '1', { include: 'friends' });
-const result = await store.request(fetchOptions)
-const user = result.content.data
-// or using identifier for findRecord builder
-const fetchOptions = findRecord({ type: 'user', id: '1' }, { include: 'friends' });
-const result = await store.request(fetchOptions)
-const user = result.content.data
 
 

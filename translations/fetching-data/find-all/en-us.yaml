@@ -1,3 +1,4 @@
 title: findAll
 description: |
   There is no direct replacement for <code>findAll</code>, you can use <code>query</code> without extra options instead. Here is how to achieve exact <code>findAll</code> behavior:
+  We discourage using <code>peekAll</code>. When you made a request, you need to guarantee that everything you requested is part of response you get back.
