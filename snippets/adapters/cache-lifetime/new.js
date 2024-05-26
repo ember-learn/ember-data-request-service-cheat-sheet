@@ -1,11 +1,11 @@
-import { LifetimesService } from '@ember-data/request-utils';
+import { CachePolicy } from '@ember-data/request-utils';
 import BaseStore from 'ember-data/store';
 
 export default class Store extends BaseStore {
   constructor(args) {
     super(args);
     // This is default configuration that would be set automatically be Ember Data
-    this.lifetimes = new LifetimesService(this, {
+    this.lifetimes = new CachePolicy(this, {
       apiCacheSoftExpires: 30_000,
       apiCacheHardExpires: 60_000
     });
