@@ -1,6 +1,6 @@
 layout:
   application:
-    logo-alt-text: 'Ember Octane: the latest edition from Ember.js'
+    logo-alt-text: 'EmberData Request Service Cheat Sheet'
     title: EmberData Request Service Cheat Sheet
     description-1: >
       This guide is a cheat sheet for using '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">EmberData&#39;s Request Service</a>'.

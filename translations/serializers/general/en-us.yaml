@@ -1,0 +1,15 @@
+title: Serializers in general
+description: |
+  In order to provide migration support for Adapters and Serializers, a '<code>'LegacyNetworkHandler'</code>' is provided. This handler takes a request and converts it into the older form, calling the appropriate Adapter and Serializer methods. If no adapter exists for the type (including no application adapter), this handler calls '<code>'next'</code>'. In this manner an app can incrementally migrate request-handling to this new paradigm on a per-type basis as desired.
+  <br />
+  The package '<code>'ember-data'</code>' automatically configures this handler. If not using the '<code>'ember-data'</code>' package, this configuration needs to be done explicitly.
+  <br />
+  We intend to support this handler through at least the 5.x series -- not deprecating its usage before 6.0.
+  <br />
+  Similarly, the methods '<code>'adapterFor'</code>' and '<code>'serializerFor'</code>' will not be deprecated until at least 6.0; however, it should no longer be assumed that an application has an adapter or serializer at all.
+  <br />
+  Serializers previously was used to accomplish two main things: serialization and normalization.
+  <br />
+  Normalization is now done in handlers, before returning the response.
+  <br />
+  Serialization can be done in handler, but we encourage application developers to do it in request builder.
