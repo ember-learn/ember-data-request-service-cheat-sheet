@@ -47,8 +47,6 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.rootURL = '/ember-data-request-service-cheat-sheet';
-    ENV.locationType = 'hash';
   }
 
   return ENV;
