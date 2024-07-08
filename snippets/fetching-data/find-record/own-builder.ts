@@ -1,6 +1,7 @@
 // Bring your own builder
 import { buildBaseURL, buildQueryParams } from '@ember-data/request-utils'
 import { pluralize } from 'ember-inflector';
+import type { FindRecordUrlOptions } from '@ember-data/request-utils';
 import type { RequestSignature } from '@warp-drive/core-types/symbols';
 import type { TypeFromInstance } from '@warp-drive/core-types/record';
 import type { FindRecordOptions } from '@warp-drive/core-types/request';
@@ -17,7 +18,7 @@ type MyRequest<Type> = {
 function findRecord<Type>(type: TypeFromInstance<Type>, id: string, options: FindRecordOptions<Type>): MyRequest<Type> {
   const identifier = { type, id };
 
-  const urlOptions = {
+  const urlOptions: Partial<FindRecordUrlOptions> = {
     op: 'findRecord',
     identifier,
     resourcePath: pluralize(identifier.type),
