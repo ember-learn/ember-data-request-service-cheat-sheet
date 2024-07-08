@@ -1,20 +1,20 @@
 layout:
   application:
-    logo-alt-text: 'Ember Octane: die neueste Edition von Ember.js'
-    title: EmberData Request Service Cheat Sheet
+    logo-alt-text: 'EmberData Request Service Spickzettel'
+    title: EmberData Request Service Spickzettel
     description-1: >
-      Dieses Guide ist ein '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">'Ember Octane'</a>'-Spickzettel.
-      Sie finden nicht alles darin, aber es sollte Ihren Einstieg in Ember.js erleichtern.
-      Pull Requests können auf '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'GitHub'</a>' eingereicht werden.
+      Dieser Leitfaden ist ein Spickzettel für die Verwendung des '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">EmberData-Anforderungsdienstes</a>'.
+      Es deckt nicht alles ab, aber es sollte Ihnen den Einstieg erleichtern!
+      PRs sind willkommen im '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'GitHub-Repository'</a>'.
     description-2: >
-      Sehen Sie in '<a href="https://guides.emberjs.com/release/upgrading/" target="_blank" rel="noopener noreferrer">'The Octane Upgrading Guide'</a>' nach, um sich über das Upgrade auf Octane zu informieren.
+      Für detaillierte Informationen zu den Upgrade-Pfaden und Unterschieden im Vergleich zu älteren EmberData-Mustern, siehe '<a href="https://rfcs.emberjs.com/id/0860-ember-data-request-service/" target="_blank" rel="noopener noreferrer">den RFC für den EmberData-Anforderungsdienst</a>'.
 
 component:
   guide-section:
     section: §
     subsection:
       classic: Classic
-      octane: Octane
+      octane: Request Service
     edit-translation-text: Übersetzung ändern
   locale-menu:
     locale-select:

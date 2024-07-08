@@ -26,22 +26,27 @@ module('Integration | Component | guide-section', function (hooks) {
 
   test('should render', async function (assert) {
     this.section = {
-      id: 'actions',
+      id: 'fetching-data',
       subsections: [
         {
-          id: 'actions',
-          classicFiles: ['classic.js', 'classic.hbs'],
-          octaneFiles: ['octane.js', 'octane.hbs'],
+          id: 'find-record',
+          classicFiles: ['old.js', 'old.ts'],
+          octaneFiles: ['new.js', 'new.ts', 'own-builder.ts'],
         },
         {
-          id: 'template-arguments-default',
-          classicFiles: ['classic.hbs', 'classic.js'],
-          octaneFiles: ['octane.hbs', 'octane.js'],
+          id: 'find-all',
+          classicFiles: ['old.js'],
+          octaneFiles: ['new.js'],
         },
         {
-          id: 'mixins',
-          classicFiles: ['classic.js'],
-          octaneDescriptionKey: 'actions.mixins.octaneDescription',
+          id: 'query',
+          classicFiles: ['old.js'],
+          octaneFiles: ['new.js'],
+        },
+        {
+          id: 'query-record',
+          classicFiles: ['old.js'],
+          octaneFiles: ['new.js'],
         },
       ],
     };
@@ -52,10 +57,12 @@ module('Integration | Component | guide-section', function (hooks) {
       />
     `);
 
-    assert.dom('[data-test-field="Section Title"]').includesText('Actions');
+    assert
+      .dom('[data-test-field="Section Title"]')
+      .includesText('Fetching Data');
 
-    assert.dom('[data-test-subsection]').exists({ count: 3 });
-    assert.dom('[data-test-code-snippet]').exists({ count: 9 });
-    assert.dom('[data-test-general-text]').exists({ count: 1 });
+    assert.dom('[data-test-subsection]').exists({ count: 4 });
+    assert.dom('[data-test-code-snippet]').exists({ count: 11 });
+    assert.dom('[data-test-general-text]').exists({ count: 0 });
   });
 });
