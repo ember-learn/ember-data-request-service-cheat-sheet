@@ -41,19 +41,19 @@ module('Acceptance | Homepage | en-US', function (hooks) {
     await visit('/');
 
     assert
-      .dom('#generating-files')
-      .hasText('Generating Files', 'We see the site in English.');
+      .dom('#fetching-data')
+      .hasText('Fetching Data', 'We see the site in English.');
 
     await fillIn('[data-test-field="Locale"]', 'pt-BR');
 
     assert
-      .dom('#generating-files')
-      .hasText('Geração de arquivos', 'We see the site in Portugese (Brazil).');
+      .dom('#fetching-data')
+      .hasText('Buscando Dados', 'We see the site in Portugese (Brazil).');
 
     await fillIn('[data-test-field="Locale"]', 'fr-FR');
 
     assert
-      .dom('#generating-files')
-      .hasText('Génération de fichiers', 'We see the site in French.');
+      .dom('#fetching-data')
+      .hasText('Récupération des données', 'We see the site in French.');
   });
 });
