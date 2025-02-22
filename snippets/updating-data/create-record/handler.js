@@ -18,10 +18,11 @@ const updatesHandler = {
 
     const { data, store } = context.request;
     const newRequestParams = Object.assign({}, context.request, {
-      body: serializeResources(
-        store.cache,
-        recordIdentifierFor(data.record)
-      )
+      body: JSON.stringify(
+        serializeResources(
+          store.cache,
+          data.record
+        ))
     });
     return next(newRequestParams);
   }
