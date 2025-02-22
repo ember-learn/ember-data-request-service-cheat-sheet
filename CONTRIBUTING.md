@@ -25,7 +25,7 @@ This is an Ember app, so the usual steps follow:
     ```
 1. Run the app.
     ```bash
-    ember serve
+    npm run start
     ```
 1. Visit your app at [http://localhost:4200](http://localhost:4200).
 
