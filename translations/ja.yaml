@@ -3,7 +3,7 @@ layout:
     logo-alt-text: 'EmberData リクエストサービス チートシート'
     title: EmberData リクエストサービス チートシート
     description-1: >
-      このガイドは、'<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">EmberDataのリクエストサービス</a>'の使用に関するチートシートです。
+      このガイドは、'<a href="https://api.emberjs.com/ember-data/release/modules/@ember-data%2Frequest" target="_blank" rel="noopener noreferrer">EmberDataのリクエストサービス</a>'の使用に関するチートシートです。
       すべてを網羅しているわけではありませんが、スタートするのに役立つでしょう！
       '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">GitHubリポジトリ</a>'でのPRは歓迎です。
     description-2: >
