@@ -1,5 +1,4 @@
 // Create handler for serialization of any record
-import { recordIdentifierFor } from '@ember-data/store';
 import { serializeResources } from '@ember-data/json-api/request';
 
 const updatesHandler = {
@@ -18,10 +17,10 @@ const updatesHandler = {
 
     const { data, store } = context.request;
     const newRequestParams = Object.assign({}, context.request, {
-      body: serializeResources(
+      body: JSON.stringify(serializeResources(
         store.cache,
-        recordIdentifierFor(data.record)
-      )
+        data.record
+      ))
     });
     return next(newRequestParams);
   }
