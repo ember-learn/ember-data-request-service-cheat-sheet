@@ -1,0 +1,68 @@
+{{#if this.isMobile}}
+  <button 
+    type="button" 
+    local-class="menu-toggle"
+    {{on "click" this.toggleMenu}}
+    aria-label="Toggle menu"
+  >
+    ≡
+  </button>
+  <div 
+    local-class="overlay {{if this.isMenuOpen 'open'}}" 
+    {{on "click" this.closeMenu}}
+    role="presentation"
+  ></div>
+{{/if}}
+
+<nav 
+  local-class="sidebar {{if this.isMenuOpen 'open'}}"
+  id="sidebar-nav"
+  aria-label="Table of contents"
+>
+  <div local-class="sidebar-content">
+    <h2 
+      local-class="sidebar-title"
+      id="nav-title"
+    >
+      Contents
+    </h2>
+    <ul 
+      local-class="nav-list"
+      role="list"
+      aria-labelledby="nav-title"
+    >
+      {{#each @model as |section|}}
+        <li>
+          <a
+            href="#{{section.id}}"
+            local-class="nav-item"
+            {{on "click" this.closeMenu}}
+            aria-current={{if (eq this.currentSection section.id) "true"}}
+          >
+            {{t (concat section.id ".title")}}
+          </a>
+          {{#if section.subsections}}
+            <ul 
+              local-class="sub-nav-list"
+              role="list"
+              aria-label={{t (concat section.id ".title")}}
+            >
+              {{#each section.subsections as |subsection|}}
+                <li local-class="sub-nav-item">
+                  <a
+                    href="#{{section.id}}__{{subsection.id}}"
+                    local-class="nav-item"
+                    {{on "click" this.closeMenu}}
+                    aria-current={{if (eq this.currentSection (concat section.id "__" subsection.id)) "true"}}
+                  >
+                    {{t (concat section.id "." subsection.id ".title")}}
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</nav> 
