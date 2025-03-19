@@ -29,7 +29,10 @@
     </p>
 
     {{#each @model as |section|}}
-      <div id={{section.id}}  local-class="guide-section-container">
+      <div 
+        id="section-{{section.id}}"
+        local-class="guide-section-container"
+      >
         <GuideSection
           @section={{section}}
         />
