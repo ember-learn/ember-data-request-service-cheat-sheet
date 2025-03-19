@@ -3,7 +3,7 @@
     type="button" 
     local-class="menu-toggle"
     {{on "click" this.toggleMenu}}
-    aria-label="Toggle menu"
+    aria-label={{t "component.sidebar-nav.toggle-menu"}}
   >
     ≡
   </button>
@@ -17,14 +17,14 @@
 <nav 
   local-class="sidebar {{if this.isMenuOpen 'open'}}"
   id="sidebar-nav"
-  aria-label="Table of contents"
+  aria-label={{t "component.sidebar-nav.table-of-contents"}}
 >
   <div local-class="sidebar-content">
     <h2 
       local-class="sidebar-title"
       id="nav-title"
     >
-      Contents
+      {{t "component.sidebar-nav.contents"}}
     </h2>
     <ul 
       local-class="nav-list"
@@ -45,7 +45,7 @@
             <ul 
               local-class="sub-nav-list"
               role="list"
-              aria-label={{t (concat section.id ".title")}}
+              aria-label={{t "component.sidebar-nav.subsections-of" sectionTitle=(t (concat section.id ".title"))}}
             >
               {{#each section.subsections as |subsection|}}
                 <li local-class="sub-nav-item">
