@@ -35,6 +35,8 @@ component:
     locale-pt-BR: Português (do Brasil)
   sidebar-nav:
     toggle-menu: "Toggle menu"
+    close-menu: "Close menu"
+    menu-icon: "≡"
     table-of-contents: "Table of contents"
     contents: "Contents"
     subsections-of: "Subsections of {sectionTitle}"

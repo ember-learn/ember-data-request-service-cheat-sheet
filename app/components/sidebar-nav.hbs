@@ -5,13 +5,14 @@
     {{on "click" this.toggleMenu}}
     aria-label={{t "component.sidebar-nav.toggle-menu"}}
   >
-    ≡
+    {{t "component.sidebar-nav.menu-icon"}}
   </button>
-  <div 
+  <button 
+    type="button"
     local-class="overlay {{if this.isMenuOpen 'open'}}" 
     {{on "click" this.closeMenu}}
-    role="presentation"
-  ></div>
+    aria-label={{t "component.sidebar-nav.close-menu"}}
+  ></button>
 {{/if}}
 
 <nav 
