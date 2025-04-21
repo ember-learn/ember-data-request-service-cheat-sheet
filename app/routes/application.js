@@ -86,6 +86,16 @@ export default class ApplicationRoute extends Route {
           },
         ],
       },
+      {
+        id: 'models',
+        subsections: [
+          {
+            id: 'model-definition',
+            classicFiles: ['old.js'],
+            octaneFiles: ['new.js'],
+          },
+        ],
+      },
     ];
   }
 }
