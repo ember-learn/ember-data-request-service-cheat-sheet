@@ -21,7 +21,9 @@ store.schema.registerResources([
         options: {
           async: false,
           inverse: 'owner',
-          polymorphic: true
+          polymorphic: true,
+          linksMode: true,
+          resetOnRemoteUpdate: false,
         }
       }
     ]
