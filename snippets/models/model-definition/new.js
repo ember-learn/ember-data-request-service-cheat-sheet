@@ -60,7 +60,9 @@ store.schema.registerResources([
         options: {
           async: false,
           inverse: 'pets',
-          as: 'pet'
+          as: 'pet',
+          linksMode: true,
+          resetOnRemoteUpdate: false,
         }
       }
     ]
