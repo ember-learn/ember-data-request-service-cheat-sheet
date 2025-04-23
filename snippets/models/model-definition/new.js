@@ -40,7 +40,9 @@ store.schema.registerResources([
         type: 'user',
         options: {
           async: false,
-          inverse: 'pets'
+          inverse: 'pets',
+          linksMode: true,
+          resetOnRemoteUpdate: false,
         }
       }
     ]
