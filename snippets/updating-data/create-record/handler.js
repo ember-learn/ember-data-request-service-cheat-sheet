@@ -2,9 +2,10 @@
 import { recordIdentifierFor } from '@ember-data/store';
 import { serializeResources } from '@ember-data/json-api/request';
 
-const updatesHandler = {
-  MUTATION_OPS: new Set(['createRecord', 'updateRecord']),
+const MUTATION_OPS = new Set(['createRecord', 'updateRecord']);
 
+
+const updatesHandler = {
   request(context, next) {
     if (!MUTATION_OPS.has(context.request.op)) {
       // Not a mutation, do nothing
