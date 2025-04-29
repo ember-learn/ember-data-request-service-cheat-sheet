@@ -12,24 +12,31 @@
   </div>
 </header>
 
-<main local-class="main">
-  <h1 local-class="title">
-    {{t "layout.application.title"}}
-  </h1>
+<div local-class="content-wrapper">
+  <SidebarNav @model={{@model}} />
 
-  <p>
-    {{t "layout.application.description-1" htmlSafe=true}}
-  </p>
+  <main local-class="main main-content">
+    <h1 local-class="title">
+      {{t "layout.application.title"}}
+    </h1>
 
-  <p>
-    {{t "layout.application.description-2" htmlSafe=true}}
-  </p>
+    <p>
+      {{t "layout.application.description-1" htmlSafe=true}}
+    </p>
 
-  {{#each @model as |section|}}
-    <div local-class="guide-section-container">
-      <GuideSection
-        @section={{section}}
-      />
-    </div>
-  {{/each}}
-</main>
+    <p>
+      {{t "layout.application.description-2" htmlSafe=true}}
+    </p>
+
+    {{#each @model as |section|}}
+      <div 
+        id="section-{{section.id}}"
+        local-class="guide-section-container"
+      >
+        <GuideSection
+          @section={{section}}
+        />
+      </div>
+    {{/each}}
+  </main>
+</div>

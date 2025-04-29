@@ -33,3 +33,10 @@ component:
     locale-fr-FR: Français
     locale-ja: 日本語
     locale-pt-BR: Português (do Brasil)
+  sidebar-nav:
+    toggle-menu: "Toggle menu"
+    close-menu: "Close menu"
+    menu-icon: "≡"
+    table-of-contents: "Table of contents"
+    contents: "Contents"
+    subsections-of: "Subsections of {sectionTitle}"
