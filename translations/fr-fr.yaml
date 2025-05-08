@@ -3,7 +3,7 @@ layout:
     logo-alt-text: 'Feuille de triche du service de demande EmberData'
     title: Feuille de triche du service de demande EmberData
     description-1: >
-      Ce guide est une feuille de triche pour utiliser le '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">service de demande EmberData</a>'.
+      Ce guide est une feuille de triche pour utiliser le '<a href="https://api.emberjs.com/ember-data/release/modules/@ember-data%2Frequest" target="_blank" rel="noopener noreferrer">service de demande EmberData</a>'.
       Il ne couvre pas tout, mais cela devrait vous aider à démarrer!
       Les PR sont les bienvenus sur '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'le dépôt GitHub'</a>'.
     description-2: >

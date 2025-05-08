@@ -3,7 +3,7 @@ layout:
     logo-alt-text: 'EmberData Request Service Spickzettel'
     title: EmberData Request Service Spickzettel
     description-1: >
-      Dieser Leitfaden ist ein Spickzettel für die Verwendung des '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">EmberData-Anforderungsdienstes</a>'.
+      Dieser Leitfaden ist ein Spickzettel für die Verwendung des '<a href="https://api.emberjs.com/ember-data/release/modules/@ember-data%2Frequest" target="_blank" rel="noopener noreferrer">EmberData-Anforderungsdienstes</a>'.
       Es deckt nicht alles ab, aber es sollte Ihnen den Einstieg erleichtern!
       PRs sind willkommen im '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'GitHub-Repository'</a>'.
     description-2: >

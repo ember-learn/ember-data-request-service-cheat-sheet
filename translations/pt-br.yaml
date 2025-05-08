@@ -3,7 +3,7 @@ layout:
     logo-alt-text: 'EmberData Request Service Cheat Sheet'
     title: EmberData Request Service Cheat Sheet
     description-1: >
-      Este guia é um resumo para usar o '<a href="https://emberjs.com/editions/octane" target="_blank" rel="noopener noreferrer">Serviço de Requisição do EmberData</a>'.
+      Este guia é um resumo para usar o '<a href="https://api.emberjs.com/ember-data/release/modules/@ember-data%2Frequest" target="_blank" rel="noopener noreferrer">Serviço de Requisição do EmberData</a>'.
       Não cobre tudo, mas deve te ajudar a começar!
       Contribuições são bem-vindas no '<a href="https://github.com/ember-learn/ember-data-request-service-cheat-sheet" target="_blank" rel="noopener noreferrer">'repositório do GitHub'</a>'.
     description-2: >
