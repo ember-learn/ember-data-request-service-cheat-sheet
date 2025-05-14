@@ -8,8 +8,8 @@ description: |
   <br />
   Similarly, the methods '<code>'adapterFor'</code>' and '<code>'serializerFor'</code>' will not be deprecated until at least 6.0; however, it should no longer be assumed that an application has an adapter or serializer at all.
   <br />
-  Serializers previously was used to accomplish two main things: serialization and normalization.
+  Serializers previously were used to accomplish two main things: serialization and normalization.
   <br />
   Normalization is now done in handlers, before returning the response.
   <br />
-  Serialization can be done in handler, but we encourage application developers to do it in request builder.
+  Serialization can be done in a handler, but we encourage application developers to do it in request builder.

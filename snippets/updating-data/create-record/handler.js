@@ -4,7 +4,6 @@ import { serializeResources } from '@ember-data/json-api/request';
 
 const MUTATION_OPS = new Set(['createRecord', 'updateRecord']);
 
-
 const updatesHandler = {
   request(context, next) {
     if (!MUTATION_OPS.has(context.request.op)) {
