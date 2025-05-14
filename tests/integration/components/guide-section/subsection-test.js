@@ -97,7 +97,7 @@ module('Integration | Component | guide-section/subsection', function (hooks) {
     assert
       .dom('[data-test-field="Subsection Description"]')
       .includesText(
-        'To create a new record using Ember Data, you should use createRecord request and attach "body" to it. Use serializeResources request utility when working with a JSON:API backend.'
+        'To create a new record using Ember Data, you should use a createRecord request and attach "body" to it. Use serializeResources request utility when working with a JSON:API backend.'
       );
 
     const emberClassic = this.element.querySelector(
