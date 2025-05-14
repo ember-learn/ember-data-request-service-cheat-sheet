@@ -61,7 +61,7 @@ module('Integration | Component | guide-section/subsection', function (hooks) {
     assert
       .dom('[data-test-field="Subsection Description"]')
       .includesText(
-        'Examples here are shown for apps that use JSON:API. Apps using other paradigms should use the builders for REST or ActiveRecord if applicable, or author their own (or a new community lib!) if not.'
+        'Examples here are shown for apps that use JSON:API. Apps using other paradigms should use the builders for REST or ActiveRecord if applicable, or author their own (or a new community library!) if not.'
       );
 
     const emberClassic = this.element.querySelector(
@@ -97,7 +97,7 @@ module('Integration | Component | guide-section/subsection', function (hooks) {
     assert
       .dom('[data-test-field="Subsection Description"]')
       .includesText(
-        'To create a new record using Ember Data you should use createRecord request and attach "body" to it. In case of JSON:API backend - you can use serializeResources request utility.'
+        'To create a new record using Ember Data, you should use createRecord request and attach "body" to it. Use serializeResources request utility when working with a JSON:API backend.'
       );
 
     const emberClassic = this.element.querySelector(
@@ -133,7 +133,7 @@ module('Integration | Component | guide-section/subsection', function (hooks) {
     assert
       .dom('[data-test-field="Subsection Description"]')
       .includesText(
-        'To delete an existing record using Ember Data you should use deleteRecord builder to issue the request.'
+        'To delete an existing record using Ember Data, you should use deleteRecord builder to issue the request.'
       );
 
     const emberClassic = this.element.querySelector(

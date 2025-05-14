@@ -1,2 +1,2 @@
 title: query
-description: The <code>query</code> just moved out from being on <code>Store</code> public interface to builders.
+description: The <code>query</code> has moved from the <code>Store</code> public interface to builders.
